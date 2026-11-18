@@ -1,5 +1,7 @@
 import os
 import sys
+from datetime import timedelta
+
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -20,7 +22,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # third party
     "rest_framework",
-    "rest_framework.authtoken",
     "django_filters",
     "drf_spectacular",
     # our apps
@@ -87,7 +88,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # ---------------- Django REST Framework ----------------
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
-        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
@@ -113,7 +114,11 @@ REST_FRAMEWORK = {
         "chat": "5/min",      # stricter: every chat call costs money
     },
 }
-
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "AUTH_HEADER_TYPES": ("Bearer",),
+}
 SPECTACULAR_SETTINGS = {
 "TITLE": "Event & Ticket Booking API",
     "DESCRIPTION": "Organizers publish events, attendees book tickets.",
