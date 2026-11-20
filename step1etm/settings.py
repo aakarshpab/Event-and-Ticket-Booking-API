@@ -128,11 +128,22 @@ SPECTACULAR_SETTINGS = {
 }
 
 # ---------------- AI / LLM settings ----------------
-GEMINI_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")  # never hard-code this!
-LLM_MODEL = os.getenv("LLM_MODEL", "gemini-3.8-flash")
-LLM_TIMEOUT = 20          # seconds before we give up on the AI service
-LLM_MAX_TOKENS = 400      # cap the length of the reply
-LLM_HISTORY_MESSAGES = 6  # only the last few messages are sent as history
+
+# FreeLLMAPI Configuration
+
+FREELLM_API_KEY = os.getenv("FREELLM_API_KEY", "")
+
+FREELLM_BASE_URL = os.getenv(
+    "FREELLM_BASE_URL",
+    "http://127.0.0.1:3001/v1"
+)
+
+FREELLM_MODEL = os.getenv("FREELLM_MODEL", "auto")
+
+LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "500"))
+
+LLM_TIMEOUT = int(os.getenv("LLM_TIMEOUT", "60"))
+
 
 # Faster password hashing ONLY while running tests
 if "test" in sys.argv:
